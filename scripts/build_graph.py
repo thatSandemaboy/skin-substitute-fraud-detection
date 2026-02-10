@@ -18,14 +18,19 @@ DATA_PROCESSED = PROJECT_ROOT / "data" / "processed"
 DATA_LABELS = PROJECT_ROOT / "data" / "labels"
 
 
-def load_data():
+def load_data(input_file=None):
     """Load processed skin substitute data."""
-    # Try expanded first, then sample
-    csv_path = DATA_PROCESSED / "skin_substitutes_expanded.csv"
-    if not csv_path.exists():
-        csv_path = DATA_PROCESSED / "skin_substitutes_sample.csv"
-    if not csv_path.exists():
-        csv_path = DATA_PROCESSED / "skin_substitutes_all_years.csv"
+    # Try full first, then expanded, then sample
+    if input_file:
+        csv_path = Path(input_file)
+    else:
+        csv_path = DATA_PROCESSED / "skin_substitutes_full.csv"
+        if not csv_path.exists():
+            csv_path = DATA_PROCESSED / "skin_substitutes_expanded.csv"
+        if not csv_path.exists():
+            csv_path = DATA_PROCESSED / "skin_substitutes_sample.csv"
+        if not csv_path.exists():
+            csv_path = DATA_PROCESSED / "skin_substitutes_all_years.csv"
     
     if not csv_path.exists():
         print("No processed data found. Run download_sample.py first.")
