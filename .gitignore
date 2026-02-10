@@ -1,0 +1,40 @@
+# Data (large files)
+data/raw/
+data/processed/
+*.csv
+*.parquet
+!data/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Models (large files)
+models/checkpoints/
+*.pt
+*.pth
+*.onnx
+
+# Logs
+logs/
+*.log
