@@ -37,15 +37,20 @@ python scripts/train_model.py
 | States represented | 51 |
 | Graph nodes | 2,791 |
 | Graph edges | **647,859** |
-| DOJ fraud cases detected | **2** |
+| DOJ-indicted providers detected | **3** (Denny #12, Kinds #19, Frank #318) |
 
 ### Validation Resultss
 
-#### 🎯 Ira Denny (AZ) — **Indicted June 2025 for $209M Medicare fraud**
-- **Our Rank:** #12 / 2,659 (top 0.5%)
-- **Services:** 153,294
-- **Status:** DOJ indicted for "medically unreasonable and unnecessary" allografts
-- **Source:** [DOJ Press Release June 2025](https://carolinefifemd.com/2025/06/30/doj-skin-substitute-ctp-indictments/)
+#### 🎯 Arizona Fraud Ring — Model detected multiple co-conspirators
+
+| Rank | Provider | Services | DOJ Status |
+|------|----------|----------|------------|
+| **#12** | Ira Denny (NP) | 153,294 | 🚨 **INDICTED** — $209M fraud |
+| **#19** | Kinds (NP) | 132,611 | 🚨 **INDICTED** — Part of $1B ring |
+| #13 | Goss (Podiatry) | 104,508 | Under investigation |
+
+All connected to Gehrke/King $1.2B scheme (Apex Medical LLC, Phoenix AZ).
+- **Source:** [DOJ Press Release July 2025](https://www.justice.gov/usao-az/pr/district-arizona-charges-7-defendants-part-national-health-care-fraud-takedown)
 
 #### Alexander Frank (OK) — Excluded by HHS-OIG Aug 2025
 - **Our Rank:** 318/2,659 (top 12%)
