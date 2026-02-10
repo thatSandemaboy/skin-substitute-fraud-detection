@@ -142,8 +142,8 @@ def train_xgboost_baseline(X, y, feature_names):
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     
-    # If we have labels, train supervised
-    if sum(y) > 0:
+    # If we have enough labels, train supervised
+    if sum(y) >= 5:  # Need at least 5 fraud cases for train/test split
         print("\nSupervised training with fraud labels...")
         X_train, X_test, y_train, y_test = train_test_split(
             X_scaled, y, test_size=0.2, stratify=y, random_state=42

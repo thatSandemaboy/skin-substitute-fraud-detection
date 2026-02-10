@@ -20,8 +20,10 @@ DATA_LABELS = PROJECT_ROOT / "data" / "labels"
 
 def load_data():
     """Load processed skin substitute data."""
-    # Try sample first, then full dataset
-    csv_path = DATA_PROCESSED / "skin_substitutes_sample.csv"
+    # Try expanded first, then sample
+    csv_path = DATA_PROCESSED / "skin_substitutes_expanded.csv"
+    if not csv_path.exists():
+        csv_path = DATA_PROCESSED / "skin_substitutes_sample.csv"
     if not csv_path.exists():
         csv_path = DATA_PROCESSED / "skin_substitutes_all_years.csv"
     
