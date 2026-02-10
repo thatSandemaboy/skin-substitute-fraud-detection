@@ -1,113 +1,125 @@
 # Skin Substitute Fraud Detection
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Graph-based machine learning model for detecting Medicare Part B billing fraud in skin substitute products (HCPCS Q4100-Q4397).
 
-**Graph-based fraud detection for Medicare Part B skin substitute billing.**
+## 🎯 Purpose
 
-Detects kickback rings, billing anomalies, and suspicious provider networks using Graph Neural Networks (GNNs) on public CMS data.
-
-## 🔥 Why This Matters
-
-- **$10B+ annually** in Medicare skin substitute spending (2024)
-- **$1.2B fraud case** — DOJ's largest skin substitute prosecution (2025)
-- **90% payment cut** — CMS slashed reimbursements Jan 2026 due to rampant fraud
-
-This project applies graph machine learning to detect fraud patterns that traditional tabular methods miss — specifically **network fraud** like kickback rings and coordinated billing schemes.
-
-## 🎯 What It Does
-
-1. **Data Pipeline** — Downloads and processes public Medicare Part B data
-2. **Graph Construction** — Builds provider-product-location networks
-3. **Anomaly Detection** — Identifies suspicious billing patterns
-4. **Ring Detection** — Finds coordinated fraud networks using GNNs
-5. **Explainability** — Generates human-readable explanations for flagged cases
-
-## 📊 Data Sources
-
-| Dataset | Source | Description |
-|---------|--------|-------------|
-| Medicare Provider Utilization | [CMS](https://data.cms.gov) | Provider billing records |
-| LEIE Exclusions | [HHS-OIG](https://oig.hhs.gov/exclusions/) | Confirmed fraud cases (labels) |
-| HCPCS Q4100-Q4397 | CMS | Skin substitute procedure codes |
+This project demonstrates technical capability in fraud detection using Graph Neural Networks, supporting an NIW (National Interest Waiver) green card application. It implements the methodology described in academic papers like Yoo et al. (2023) "Medicare Fraud Detection Using Graph Analysis."
 
 ## 🚀 Quick Start
 
 ```bash
-# Clone the repo
+# Clone and setup
 git clone https://github.com/thatSandemaboy/skin-substitute-fraud-detection.git
 cd skin-substitute-fraud-detection
-
-# Install dependencies
+python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 
 # Download data
-python scripts/download_data.py
+python scripts/download_sample.py
 
-# Run analysis
+# Build graph
 python scripts/build_graph.py
+
+# Train models
 python scripts/train_model.py
 ```
+
+## 📊 Results
+
+**Current Status:** Working prototype with sample data
+
+| Metric | Value |
+|--------|-------|
+| Providers analyzed | 229 |
+| HCPCS codes covered | 45 |
+| States represented | 40 |
+| Graph nodes | 314 |
+| Graph edges | 5,856 |
+
+### Top Anomalous Providers (by combined score)
+
+| Provider | State | Services | Anomaly Score |
+|----------|-------|----------|---------------|
+| Soleymani | IN | 49 | 0.50 |
+| Sandhu | FL | 16,591 | 0.49 |
+| Meo | NY | 15 | 0.45 |
+| Nazarian | NY | 3,267 | 0.34 |
+| Ellington | TX | 12,102 | 0.32 |
+
+## 🔬 Methodology
+
+### 1. Data Collection
+- Medicare Provider Utilization data (CMS API)
+- LEIE exclusions database (HHS-OIG)
+- Focus on skin substitute HCPCS codes (Q4100-Q4397)
+
+### 2. Graph Construction
+- **Nodes:** Providers (NPI), Products (HCPCS), States
+- **Edges:** BILLED (provider→product), LOCATED_IN (provider→state), SIMILAR_PRODUCTS, SAME_STATE
+
+### 3. Feature Engineering
+- Tabular: Total services, beneficiaries, avg payment, charge-to-payment ratio
+- Graph: Degree centrality, PageRank, clustering coefficient
+
+### 4. Models
+- **XGBoost Baseline:** Heuristic anomaly scoring (no labels)
+- **Graph Autoencoder:** Unsupervised anomaly detection via reconstruction error
+
+### 5. Key Insight
+> Graph neural networks detect fraud *networks* (kickback rings, referral schemes) that traditional tabular analysis misses. This aligns with EO 14243's mandate to "eliminate information silos."
 
 ## 📁 Project Structure
 
 ```
 ├── data/
-│   ├── raw/              # Downloaded CMS data
-│   ├── processed/        # Cleaned, graph-ready data
-│   └── labels/           # LEIE exclusion labels
-├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   ├── 02_graph_construction.ipynb
-│   ├── 03_baseline_models.ipynb
-│   └── 04_gnn_training.ipynb
-├── src/
-│   ├── data/             # Data loading and processing
-│   ├── features/         # Feature engineering
-│   ├── models/           # GNN model definitions
-│   └── visualization/    # Graph visualization
+│   ├── processed/          # Processed data files
+│   │   ├── skin_substitutes_sample.csv
+│   │   ├── provider_graph.pkl
+│   │   └── anomaly_results.csv
+│   └── labels/
+│       └── leie_exclusions.csv
+├── models/
+│   └── autoencoder.pt      # Trained GNN model
 ├── scripts/
-│   ├── download_data.py
-│   ├── build_graph.py
-│   └── train_model.py
-├── tests/
-├── requirements.txt
-└── README.md
+│   ├── download_sample.py  # Data download via CMS API
+│   ├── build_graph.py      # Graph construction
+│   └── train_model.py      # Model training
+├── src/models/
+│   └── gnn.py             # GNN model definitions
+└── docs/
+    └── MODEL-EVALUATION-CRITERIA.md
 ```
 
-## 🧠 Methodology
+## 📈 Success Metrics
 
-### Graph Structure
+| Level | Criteria | Status |
+|-------|----------|--------|
+| **Minimum** | Working GNN model | ✅ |
+| **Good** | Identifies statistical outliers | ✅ |
+| **Excellent** | Flags known DOJ cases | 🔄 Pending validation |
 
-```
-Provider ──[BILLED]──> Product (HCPCS)
-    │                      │
-    └──[REFERRED_TO]──> Provider
-    │
-    └──[LOCATED_IN]──> Location
-```
+## 🔑 Key References
 
-### Detection Approaches
-
-1. **Supervised Classification** — Predict LEIE exclusion using GraphSAGE
-2. **Anomaly Detection** — Graph autoencoders for outlier detection
-3. **Community Detection** — Find suspicious provider clusters
-
-## 📚 References
-
-- [OIG Report: Skin Substitutes FWA (Sept 2025)](https://oig.hhs.gov/reports/all/2025/medicare-part-b-payment-trends-for-skin-substitutes-raise-major-concerns-about-fraud-waste-and-abuse/)
-- [DOJ: $1.2B Skin Substitute Fraud Sentencing](https://www.justice.gov/opa/pr/wound-graft-company-owners-sentenced-12b-health-care-fraud-and-agree-pay-309m-resolve-civil)
-- [EO 14243: Stopping Waste, Fraud, and Abuse](https://www.whitehouse.gov/presidential-actions/2025/03/stopping-waste-fraud-and-abuse-by-eliminating-information-silos/)
+- [OIG Skin Substitutes Report (Sept 2025)](https://oig.hhs.gov/reports/all/2025/medicare-part-b-payment-trends-for-skin-substitutes-raise-major-concerns-about-fraud-waste-and-abuse/)
+- [DOJ $1.2B Fraud Sentencing](https://www.justice.gov/opa/pr/wound-graft-company-owners-sentenced-12b-health-care-fraud)
+- EO 14243: "Stopping Waste, Fraud, and Abuse by Eliminating Information Silos"
 - Yoo et al. (2023) "Medicare Fraud Detection Using Graph Analysis" — IEEE Access
 
-## 📄 License
+## 🎯 NIW Alignment
 
-MIT License — See [LICENSE](LICENSE) for details.
+This project demonstrates:
+1. **Technical capability** in graph ML and healthcare data
+2. **National benefit** through fraud detection methodology
+3. **Alignment with EO 14243** on eliminating information silos
+4. **Reproducible research** with open-source code
 
-## 🤝 Contributing
+## 📝 License
 
-Contributions welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
+MIT License - See LICENSE file for details.
 
----
+## 👤 Author
 
-*Built with the goal of supporting federal program integrity efforts and advancing open-source fraud detection research.*
+Anthony Abavelim
+- GitHub: [@thatSandemaboy](https://github.com/thatSandemaboy)
