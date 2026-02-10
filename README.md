@@ -37,7 +37,7 @@ python scripts/train_model.py
 | States represented | 51 |
 | Graph nodes | 2,791 |
 | Graph edges | **647,859** |
-| DOJ-indicted providers detected | **6** |
+| DOJ-indicted providers detected | **7** |
 
 ### Validation Resultss
 
@@ -48,11 +48,12 @@ python scripts/train_model.py
 | **#12** | Ira Denny | 1255987475 | 153,294 | 🚨 **INDICTED** — $209M fraud |
 | **#19** | Kinds | 1174182760 | 132,611 | 🚨 **INDICTED** |
 | **#36** | Carlos Ching | 1417543117 | 68,310 | 🚨 **GUILTY PLEA** (2024) |
+| **#55** | David Jenson | 1629046669 | 37,968 | 🚨 **CHARGED** — $45M fraud (Texas) |
 | **#61** | Bethany Jameson | 1225551484 | 49,467 | 🚨 **GUILTY PLEA** (2024) |
 | **#67** | Gina Palacios | 1275217952 | 34,236 | 🚨 **CHARGED** — $28M fraud |
 | #13 | Goss | 1700860715 | 104,508 | Under investigation |
 
-**Detection rate: 5 of top 67 (7.5%) are DOJ-indicted/charged**
+**Detection rate: 6 of top 67 (9%) are DOJ-indicted/charged**
 
 All connected to Gehrke/King $1.2B scheme (Apex Medical LLC, APX Mobile Medical, Phoenix AZ).
 - **Source:** [DOJ Press Release July 2025](https://www.justice.gov/usao-az/pr/district-arizona-charges-7-defendants-part-national-health-care-fraud-takedown)
