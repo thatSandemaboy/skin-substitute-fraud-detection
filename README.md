@@ -143,7 +143,7 @@ With **zero labeled training data**, our unsupervised model:
 - Processes 9.6M Medicare records in 38 seconds
 - Builds 648K-edge provider network graph
 
-> **Key Insight:** The model flagged Denny as anomalous **before** the DOJ indictment was public knowledge. This demonstrates the predictive power of graph-based anomaly detection for healthcare fraud.
+> **Key Insight:** The model flagged Denny as anomalous **before** i knew the DOJ indictment. I used the DOJ indictment as confidence in the strength of our model. This demonstrates the predictive power of graph-based anomaly detection for healthcare fraud.
 
 ## 🔑 Key References
 
@@ -152,13 +152,7 @@ With **zero labeled training data**, our unsupervised model:
 - EO 14243: "Stopping Waste, Fraud, and Abuse by Eliminating Information Silos"
 - Yoo et al. (2023) "Medicare Fraud Detection Using Graph Analysis" — IEEE Access
 
-## 🎯 NIW Alignment
 
-This project demonstrates:
-1. **Technical capability** in graph ML and healthcare data
-2. **National benefit** through fraud detection methodology
-3. **Alignment with EO 14243** on eliminating information silos
-4. **Reproducible research** with open-source code
 
 ## 📝 License
 
