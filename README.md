@@ -2,11 +2,15 @@
 
 Graph-based machine learning model for detecting Medicare Part B billing fraud in skin substitute products (HCPCS Q4100-Q4397).
 
-## 🎯 Purpose
+## Purpose
 
-This project demonstrates technical capability in fraud detection using Graph Neural Networks, supporting an NIW (National Interest Waiver) green card application. It implements the methodology described in academic papers like Yoo et al. (2023) "Medicare Fraud Detection Using Graph Analysis."
+This project explores graph-based anomaly detection for Medicare Part B skin substitute billing. It implements a prototype workflow inspired by graph-based healthcare fraud research, including CMS data retrieval, provider-product graph construction, unsupervised anomaly scoring, and validation against public enforcement signals.
 
-## 🚀 Quick Start
+## Portfolio Note
+
+This repo is an earlier, narrower prototype of the broader `medicare-fraud-detection` work. It is useful as supporting evidence for the skin-substitute use case, but the stronger public portfolio anchor is the consolidated Medicare fraud detection repo.
+
+## Quick Start
 
 ```bash
 # Clone and setup
@@ -26,7 +30,7 @@ python scripts/build_graph.py
 python scripts/train_model.py
 ```
 
-## 📊 Results
+## Results
 
 **Current Status:** Working prototype with validated fraud detection
 
@@ -37,20 +41,20 @@ python scripts/train_model.py
 | States represented | 51 |
 | Graph nodes | 2,791 |
 | Graph edges | **647,859** |
-| DOJ-indicted providers detected | **7** |
+| Public enforcement matches surfaced | **7** |
 
-### Validation Resultss
+### Validation Results
 
-#### 🎯 Arizona Fraud Ring — Model detected 5 co-conspirators
+#### Arizona Fraud Ring - Model surfaced multiple connected providers
 
 | Rank | Provider | NPI | Services | DOJ Status |
 |------|----------|-----|----------|------------|
-| **#12** | Ira Denny | 1255987475 | 153,294 | 🚨 **INDICTED** — $209M fraud |
-| **#19** | Kinds | 1174182760 | 132,611 | 🚨 **INDICTED** |
-| **#36** | Carlos Ching | 1417543117 | 68,310 | 🚨 **GUILTY PLEA** (2024) |
-| **#55** | David Jenson | 1629046669 | 37,968 | 🚨 **CHARGED** — $45M fraud (Texas) |
-| **#61** | Bethany Jameson | 1225551484 | 49,467 | 🚨 **GUILTY PLEA** (2024) |
-| **#67** | Gina Palacios | 1275217952 | 34,236 | 🚨 **CHARGED** — $28M fraud |
+| **#12** | Ira Denny | 1255987475 | 153,294 | **INDICTED** - $209M fraud |
+| **#19** | Kinds | 1174182760 | 132,611 | **INDICTED** |
+| **#36** | Carlos Ching | 1417543117 | 68,310 | **GUILTY PLEA** (2024) |
+| **#55** | David Jenson | 1629046669 | 37,968 | **CHARGED** - $45M fraud (Texas) |
+| **#61** | Bethany Jameson | 1225551484 | 49,467 | **GUILTY PLEA** (2024) |
+| **#67** | Gina Palacios | 1275217952 | 34,236 | **CHARGED** - $28M fraud |
 | #13 | Goss | 1700860715 | 104,508 | Under investigation |
 
 **Detection rate: 6 of top 67 (9%) are DOJ-indicted/charged**
@@ -61,7 +65,7 @@ All connected to Gehrke/King $1.2B scheme (Apex Medical LLC, APX Mobile Medical,
 #### Alexander Frank (OK) — Excluded by HHS-OIG Aug 2025
 - **Our Rank:** 318/2,659 (top 12%)
 - **Services:** 2,796
-- **Detection:** ✅ Caught in top 15% with zero labeled training data
+- **Detection:** Caught in top 15% with zero labeled training data
 
 ### Top 15 High-Risk Providers (by combined score)
 
@@ -83,7 +87,7 @@ All connected to Gehrke/King $1.2B scheme (Apex Medical LLC, APX Mobile Medical,
 | 14 | Ahmed | NY | Podiatry | 349 | 0.23 | |
 | 15 | Gargasz | FL | Hand Surgery | 22 | 0.23 | |
 
-## 🔬 Methodology
+## Methodology
 
 ### 1. Data Collection
 - Medicare Provider Utilization data (CMS API)
@@ -105,7 +109,7 @@ All connected to Gehrke/King $1.2B scheme (Apex Medical LLC, APX Mobile Medical,
 ### 5. Key Insight
 > Graph neural networks detect fraud *networks* (kickback rings, referral schemes) that traditional tabular analysis misses. This aligns with EO 14243's mandate to "eliminate information silos."
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ├── data/
@@ -127,13 +131,13 @@ All connected to Gehrke/King $1.2B scheme (Apex Medical LLC, APX Mobile Medical,
     └── MODEL-EVALUATION-CRITERIA.md
 ```
 
-## 📈 Success Metrics
+## Success Metrics
 
 | Level | Criteria | Status |
 |-------|----------|--------|
-| **Minimum** | Working GNN model | ✅ |
-| **Good** | Identifies statistical outliers | ✅ |
-| **Excellent** | Detects DOJ-indicted fraudsters | ✅ **Denny at #12** |
+| **Minimum** | Working GNN model | Complete |
+| **Good** | Identifies statistical outliers | Complete |
+| **Excellent** | Surfaces providers later matched to public enforcement records | Complete |
 
 ### Detection Performance
 
@@ -143,9 +147,9 @@ With **zero labeled training data**, our unsupervised model:
 - Processes 9.6M Medicare records in 38 seconds
 - Builds 648K-edge provider network graph
 
-> **Key Insight:** The model flagged Denny as anomalous **before** i knew the DOJ indictment. I used the DOJ indictment as confidence in the strength of our model. This demonstrates the predictive power of graph-based anomaly detection for healthcare fraud.
+> **Key Insight:** The model flagged Denny as anomalous before the DOJ indictment was used as validation evidence. That gave a useful external confidence check for the graph-based anomaly approach.
 
-## 🔑 Key References
+## Key References
 
 - [OIG Skin Substitutes Report (Sept 2025)](https://oig.hhs.gov/reports/all/2025/medicare-part-b-payment-trends-for-skin-substitutes-raise-major-concerns-about-fraud-waste-and-abuse/)
 - [DOJ $1.2B Fraud Sentencing](https://www.justice.gov/opa/pr/wound-graft-company-owners-sentenced-12b-health-care-fraud)
@@ -154,11 +158,11 @@ With **zero labeled training data**, our unsupervised model:
 
 
 
-## 📝 License
+## License
 
 MIT License - See LICENSE file for details.
 
-## 👤 Author
+## Author
 
 Anthony Abavelim
 - GitHub: [@thatSandemaboy](https://github.com/thatSandemaboy)
